@@ -13,7 +13,7 @@ struct P
 };
 
 typedef struct P Process;
-
+//sort arrival time
 void SortArrivalTime(Process ProcessList[], int NumberOfProcess);
 void SortBurstTime(Process ProcessList[], int NumberOfProcess);
 
