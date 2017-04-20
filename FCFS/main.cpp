@@ -28,7 +28,7 @@ void main()
 			tat[i] = finish[i] - arr[i];
 		}
 	}
-	printf("\nPName Arrtime Burtime Start TAT Finish");
+
 	printf("\n%s\t%6s\t\t%6s\t%6s\t%6s\t%6s", "PName", "Arrtime", "Burtime", "Start", "TAT", "Finish");
 		for (i = 0; i<n; i++)
 		{
