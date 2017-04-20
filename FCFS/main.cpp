@@ -29,7 +29,7 @@ void main()
 		}
 	}
 
-	printf("\n%s\t%6s\t\t%6s\t%6s\t%6s\t%6s", "PName", "Arrtime", "Burtime", "Start", "TAT", "Finish");
+	printf("\n%s\t%6s\t\t%6s\t%6s\t%6s\t%6s", "PName", "Arrtime", "Burstime", "Start", "TAT", "Finish");
 		for (i = 0; i<n; i++)
 		{
 			printf("\n%d\t%6d\t\t%6d\t%6d\t%6d\t%6d", pn[i], arr[i], bur[i], star[
