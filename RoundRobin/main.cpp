@@ -4,18 +4,16 @@
 struct P
 {
 	int processName;
-	int arrivalTime;
 	int burstTime;
 	int startTime;
 	int finishTime;
-	int turnAroundTime;
-	int waitTime;
 	int remainingTime;
 };
 
 typedef struct P Process;
 
 void SortArrivalTime(Process ProcessList[], int NumberOfProcess);
+void ContinueQueue(Process Queue[], int numberOfProcess);
 
 void main()
 {
@@ -35,50 +33,76 @@ void main()
 
 	for (i = 0; i<numberOfProcess; i++)
 	{
-		printf("Enter the Process Name, Arrival Time & BurstTime:");
-		scanf("%d%d%d", &processList[i].processName, &processList[i].arrivalTime, &processList[i].burstTime);
+		printf("Enter the Process Name & BurstTime:");
+		scanf("%d%d", &processList[i].processName, &processList[i].burstTime);
 		processList[i].remainingTime = processList[i].burstTime;
+		processList[i].startTime = -1;
 
 		totalBurstTime += processList[i].burstTime;
 	}
 
-	SortArrivalTime(processList, numberOfProcess);
-
-	int lastTimeStamp = 0;
-	int timeStamp = processList[0].arrivalTime;
-	int finishTime = timeStamp + totalBurstTime;
-
-	int listIndex = 0;
-	int queueSize = 0;
-	int queueIndex = 0;
+	int timeStamp = 0;
+	int finishTime = totalBurstTime;
 
 	Process *processQueue = (Process*)malloc(numberOfProcess * sizeof(Process));
 
+	for(i = 0; i < numberOfProcess; i++)
+	{
+		processQueue[i] = processList[i];
+	}
+
+	printf("\n%s%6s%6s", "Proc", "Start", "Stop");
+
 	while(timeStamp < finishTime)
 	{
-		if(listIndex < numberOfProcess)
+		if(processQueue[0].remainingTime > 0)
 		{
-			if (processList[i].arrivalTime <= timeStamp && processList[i].arrivalTime > lastTimeStamp)
+			printf("\n%d%6d", processQueue[0].processName, timeStamp);
+
+			if(processQueue[0].startTime == -1)
 			{
-				processQueue[i] = processList[i];
+				processQueue[0].startTime = timeStamp;
 			}
+
+			timeStamp += (processQueue[0].remainingTime > quantumTime ? quantumTime : processQueue[0].remainingTime);
+
+			processQueue[0].remainingTime -= quantumTime;
+
+			if(processQueue[0].remainingTime <= 0)
+			{
+				processQueue[0].finishTime = timeStamp;
+			}
+
+			printf("%6d", timeStamp);
 		}
+
+		ContinueQueue(processQueue, numberOfProcess);
 	}
+
+	int totalWaitingTime = 0;
+	int totalTurnaroundTime = 0;
+
+	for(i = 0; i < numberOfProcess; i++)
+	{
+		totalWaitingTime += processQueue[i].startTime;
+		totalTurnaroundTime += processQueue[i].finishTime;
+	}
+
+	printf("\n Average waiting time: %.2f", ((float)totalWaitingTime) / numberOfProcess);
+	printf("\n Average turnaround time: %.2f", ((float)totalTurnaroundTime) / numberOfProcess);
+
+	free(processList);
+	free(processQueue);
 }
 
-void SortArrivalTime(Process ProcessList[], int NumberOfProcess)
+void ContinueQueue(Process Queue[], int numberOfProcess)
 {
-	int i, j;
-	for (i = 0; i < NumberOfProcess - 1; i++)
+	Process temp = Queue[0];
+	int i;
+
+	for(i = 0; i < numberOfProcess - 1; i++)
 	{
-		for (j = i + 1; j < NumberOfProcess; j++)
-		{
-			if (ProcessList[i].arrivalTime > ProcessList[j].arrivalTime)
-			{
-				Process temp = ProcessList[i];
-				ProcessList[i] = ProcessList[j];
-				ProcessList[j] = temp;
-			}
-		}
+		Queue[i] = Queue[i + 1];
 	}
+	Queue[numberOfProcess - 1] = temp;
 }

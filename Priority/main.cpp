@@ -36,7 +36,7 @@ void main()
 
 	SortArrivalTime(processList, numberOfProcess);
 
-	int lastTimeStamp = 0;
+	int lastTimeStamp = -1;
 	int timeStamp = processList[0].arrivalTime;
 
 	Process *processQueue = (Process*)malloc(numberOfProcess * sizeof(Process));

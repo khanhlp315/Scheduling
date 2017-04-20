@@ -14,7 +14,6 @@ struct P
 };
 
 typedef struct P Process;
-//sort arrival time
 void SortArrivalTime(Process ProcessList[], int NumberOfProcess);
 void SortBurstTime(Process ProcessList[], int NumberOfProcess);
 
@@ -36,7 +35,7 @@ void main()
 	
 	SortArrivalTime(processList, numberOfProcess);
 
-	int lastTimeStamp = 0;
+	int lastTimeStamp = -1;
 	int timeStamp = processList[0].arrivalTime;
 
 	Process *processQueue = (Process*)malloc(numberOfProcess * sizeof(Process));
