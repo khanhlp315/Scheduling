@@ -68,8 +68,7 @@ void main()
 	int totalWaitingTime = 0;
 	int totalTurnaroundTime = 0;
 
-	printf("\nPName Arrtime Burtime Start TAT Finish");
-	printf("\n%s\t%6s\t\t%6s\t%6s\t%6s\t%6s", "PName", "Arrtime", "Burtime", "Start", "TAT", "Finish");
+	printf("\n%s\t%6s\t\t%6s\t%6s\t%6s\t%6s", "PName", "Arrtime", "Burstime", "Start", "TAT", "Finish");
 	for (i = 0; i< numberOfProcess; i++)
 	{
 		printf("\n%d\t%6d\t\t%6d\t%6d\t%6d\t%6d", processQueue[i].processName, processQueue[i].arrivalTime, processQueue[i].burstTime, processQueue[i].startTime, processQueue[i].turnAroundTime, processQueue[i].finishTime);
