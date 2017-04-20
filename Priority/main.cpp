@@ -6,6 +6,7 @@ struct P
 	int processName;
 	int arrivalTime;
 	int burstTime;
+	int priority;
 	int startTime;
 	int finishTime;
 	int turnAroundTime;
@@ -15,7 +16,7 @@ struct P
 typedef struct P Process;
 
 void SortArrivalTime(Process ProcessList[], int NumberOfProcess);
-void SortBurstTime(Process ProcessList[], int NumberOfProcess);
+void SortPriority(Process ProcessList[], int NumberOfProcess);
 
 void main()
 {
@@ -29,10 +30,10 @@ void main()
 
 	for (i = 0; i<numberOfProcess; i++)
 	{
-		printf("Enter the Process Name, Arrival Time & BurstTime:");
-		scanf("%d%d%d", &processList[i].processName, &processList[i].arrivalTime, &processList[i].burstTime);
+		printf("Enter the Process Name, Arrival Time, BurstTime & Priority: ");
+		scanf("%d%d%d%d", &processList[i].processName, &processList[i].arrivalTime, &processList[i].burstTime, &processList[i].priority);
 	}
-	
+
 	SortArrivalTime(processList, numberOfProcess);
 
 	int lastTimeStamp = 0;
@@ -43,16 +44,16 @@ void main()
 	int queueSize = 0;
 	do
 	{
-		for(i = 0; i < numberOfProcess; i++)
+		for (i = 0; i < numberOfProcess; i++)
 		{
-			if(processList[i].arrivalTime <= timeStamp && processList[i].arrivalTime > lastTimeStamp)
+			if (processList[i].arrivalTime <= timeStamp && processList[i].arrivalTime > lastTimeStamp)
 			{
 				processQueue[i] = processList[i];
 				queueSize++;
 			}
 		}
 
-		SortBurstTime(processQueue + index, queueSize - index);
+		SortPriority(processQueue + index, queueSize - index);
 
 		processQueue[index].startTime = timeStamp;
 		processQueue[index].finishTime = processQueue[index].startTime + processQueue[index].burstTime;
@@ -100,14 +101,14 @@ void SortArrivalTime(Process ProcessList[], int NumberOfProcess)
 	}
 }
 
-void SortBurstTime(Process ProcessList[], int NumberOfProcess)
+void SortPriority(Process ProcessList[], int NumberOfProcess)
 {
 	int i, j;
 	for (i = 0; i < NumberOfProcess - 1; i++)
 	{
 		for (j = i + 1; j < NumberOfProcess; j++)
 		{
-			if (ProcessList[i].burstTime > ProcessList[j].burstTime)
+			if (ProcessList[i].priority > ProcessList[j].priority)
 			{
 				Process temp = ProcessList[i];
 				ProcessList[i] = ProcessList[j];
